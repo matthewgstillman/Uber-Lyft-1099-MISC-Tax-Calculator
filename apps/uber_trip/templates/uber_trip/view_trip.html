@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Tax Calculator</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        {% load mathfilters %}
+        <div class="container">
+            <h2>Tax Calculator</h2>
+            <h1><a href="enter_trip">Enter Another Trip</a></h1>
+            <h2>Trip Details</h2>
+                {% for trip in trip %}
+                    <h5>Trip Date: {{ trip.month}}-{{ trip.day}}-{{ trip.year}}</h5>
+                    <h5>Starting Time: {{ trip.start_hour }}:{{ trip.start_minute }} {{ trip.am_pm }}</h5>
+                    <h5>Starting Address: {{ trip.start_address }}</h5>
+                    <h5>Ending Address: {{ trip.end_address }}</h5>
+                    <h5>Trip Fare: ${{ trip.fare|floatformat:"2" }}</h5>
+                    <br>
+                    <td>Miles Driven: {{ trip.miles_driven|floatformat:"2" }} Miles</td>
+                    <br>
+                    <td>Tax Miles Discount In CA: ${{ trip.miles_driven|mul:.535|floatformat:"2" }}</td>
+                    <br>
+                {% endfor %}
+            <br>
+        </div>
+        <a href="/">Go Back</a>
+    </body>
+    <script
+        src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous">
+    </script>
+    <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
+</html>

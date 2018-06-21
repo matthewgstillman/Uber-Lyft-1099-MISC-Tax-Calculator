@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Tax Calculator</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        {% load mathfilters %}
+        <div class="container">
+            <h2>Tax Calculator</h2>
+            <h1><a href="/enter_trip">Enter Trip For Taxes</a></h1>
+            <br>
+            <h2>Trip Details</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fare</th>
+                        <th>Miles Driven</th>
+                        <th>Starting Address</th>
+                        <th>Ending Address</th>
+                        <th>Starting Time</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                {% for trip in uber_trips %}
+                        <tr>
+                            <td><a href="/view_trip/{{trip.id}}">${{ trip.fare|floatformat:"2" }}</a></td>
+                            <td>{{ trip.miles_driven|floatformat:"2" }}</td></a>
+                            <td>{{ trip.start_address }}</td>
+                            <td>{{ trip.end_address }}</td>
+                            <td>{{ trip.start_hour }}:{{ trip.start_minute }} {{ trip.am_pm }}</td>
+                            <td>{{ trip.month}}-{{ trip.day}}-{{ trip.year}}</td>
+                        </tr>
+                {% endfor %}
+            </table>
+                {% for fare in fare_sum %}
+                    <tr>
+                        <td>Total Fares: ${{ fare_sum.values|first }}</td>
+                    </tr>
+                {% endfor %}
+                <br>
+                {% for miles in miles_sum %}
+                    <tr>
+                        <td>Total Miles Driven: {{ miles_sum.values|first }} Miles</td>
+                    </tr>
+                    <br>
+                    <tr> 
+                        <td>Tax Miles Discount In CA: ${{ miles_sum.values|first|mul:.535|floatformat:"2" }}</td>
+                    </tr>
+                {% endfor %}
+                <br>
+                <h1><a href="/enter_trip">Enter Trip For Taxes</a></h1>
+            <br>
+        </div>
+        <a href="/">Go Back</a>
+    </body>
+    <script
+        src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous">
+    </script>
+    <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
+</html>
